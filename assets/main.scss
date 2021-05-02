@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Hind+Madurai');
+
+html {
+  font-size: 14px;
+}
+
+#app {
+  background: linear-gradient(
+    217deg
+    , #ffe0b2, #ffa726 70.71%), linear-gradient(
+    127deg
+    , #ffa726, #ffca28 70.71%), linear-gradient(
+    336deg
+    , #fb8c00, #ffcc80 70.71%);
+
+  font-family: 'Hind Madurai', 'Oswald', Times New Roman, Tahoma, 'Roboto', sans-serif;
+  letter-spacing: 0;
+  font-weight: 400;
+
+  .v-btn, .v-sheet.v-card, .v-dialog {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  @media screen and (max-width: 600px) {
+    .container {
+      padding: 0;
+    }
+  }
+
+  .v-snack__content {
+    font-size: 1rem;
+  }
+}
+
+.v-application a {
+  text-decoration: none;
+  color: #ffa726;
+}
