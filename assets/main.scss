@@ -13,7 +13,7 @@ html {
     336deg
     , #fb8c00, #ffcc80 70.71%);
 
-  font-family: 'Hind Madurai', 'Oswald', Times New Roman, Tahoma, 'Roboto', sans-serif;
+  font-family: 'Hind Madurai', 'Roboto', sans-serif;
   letter-spacing: 0;
   font-weight: 400;
 
@@ -36,4 +36,9 @@ html {
 .v-application a {
   text-decoration: none;
   color: #ffa726;
+}
+
+.logo-img {
+  width: 50px;
+  margin-top: 8px;
 }
