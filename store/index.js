@@ -2,6 +2,7 @@ import firebase from 'firebase'
 import {getUserFromCookie, getUserFromSession} from '../helpers'
 import Cookies from 'js-cookie'
 import _ from 'lodash'
+import moment from 'moment'
 
 export const state = () => ({
   user: null,
@@ -217,6 +218,53 @@ export const actions = {
     })
 
     ctx.commit('removeInvite', { invite })
+  },
+
+  async createEvent(ctx, event) {
+    let date = moment(event.date +' '+ event.time +':00')
+
+    let result = await firebase.firestore().collection('events').add({
+      name: event.name,
+      team_id: ctx.state.account.active_team_id,
+      date: date.toDate()
+    })
+    return result.id
+  },
+  async editEvent(ctx, event) {
+    let date = moment(event.date +' '+ event.time +':00')
+
+    await firebase.firestore().collection('events').doc(event.id).update({
+      name: event.name,
+      date: date.toDate()
+    })
+  },
+  async deleteEvent(ctx, id) {
+    await firebase.firestore().collection('events').doc(id).delete()
+  },
+  async changeStatus(ctx, data) {
+    if (data.status === 1) {
+      await firebase.firestore().collection('events').doc(data.event_id).update({
+        available: firebase.firestore.FieldValue.arrayUnion({
+          id: ctx.state.user.user_id,
+          name: ctx.state.account.name
+        }),
+        unavailable: firebase.firestore.FieldValue.arrayRemove({
+          id: ctx.state.user.user_id,
+          name: ctx.state.account.name
+        }),
+      })
+    } else if (data.status === 2) {
+      await firebase.firestore().collection('events').doc(data.event_id).update({
+        available: firebase.firestore.FieldValue.arrayRemove({
+          id: ctx.state.user.user_id,
+          name: ctx.state.account.name
+        }),
+        unavailable: firebase.firestore.FieldValue.arrayUnion({
+          id: ctx.state.user.user_id,
+          name: ctx.state.account.name
+        }),
+      })
+    }
   }
 }
 

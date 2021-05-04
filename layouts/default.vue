@@ -37,6 +37,14 @@
               <v-list-item-title>Team overzicht</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <v-list-item to="/create-event">
+            <v-list-item-icon>
+              <v-icon>mdi-badge-account-horizontal</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Evenement toevoegen</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
           <v-list-item to="/invite-players">
             <v-list-item-icon>
               <v-icon>mdi-account-box</v-icon>

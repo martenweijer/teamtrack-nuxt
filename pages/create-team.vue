@@ -36,7 +36,6 @@ export default {
         await this.$router.push('/')
       } catch (e) {
         this.error = true
-        console.log(e)
       } finally {
         this.$store.commit('stopLoading')
       }
