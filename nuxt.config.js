@@ -2,8 +2,8 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   head: {
-    titleTemplate: '%s - teamtrack',
-    title: '',
+    titleTemplate: '%s - Team communicatie eenvoudig gemaakt.',
+    title: 'Teamtrack',
     htmlAttrs: {
       lang: 'en'
     },
@@ -45,10 +45,6 @@ export default {
           primary: colors.lightBlue.darken3,
           accent: colors.orange.lighten1,
           secondary: colors.blueGrey.lighten1,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
         }
       }
     }
@@ -64,7 +60,13 @@ export default {
       appId: process.env.appId
     },
     services: {
-      auth: true,
+      auth: {
+        initialize: {
+          onAuthStateChangedMutation: 'stopLoading',
+          // onAuthStateChangedAction: 'onAuthStateChangedAction',
+          subscribeManually: false
+        },
+      },
       firestore: true
     }
   },

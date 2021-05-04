@@ -8,7 +8,7 @@
           </v-alert>
 
           <v-text-field v-model="email" label="E-mailadres" type="email"/>
-          <v-text-field v-model="pass" label="Wachtwoord" type="password"/>
+          <v-text-field v-model="pass" label="Wachtwoord" type="password" @keyup.enter.native="onSubmit"/>
         </v-card-text>
         <v-card-actions>
           <a @click="forgot_password = true; forgot_email = email">Wachtwoord vergeten?</a>
