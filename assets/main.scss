@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Hind+Madurai');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 html {
   font-size: 14px;
@@ -6,12 +7,9 @@ html {
 
 #app {
   background: linear-gradient(
-    217deg
-    , #ffe0b2, #ffa726 70.71%), linear-gradient(
-    127deg
-    , #ffa726, #ffca28 70.71%), linear-gradient(
-    336deg
-    , #fb8c00, #ffcc80 70.71%);
+      217deg, #ffe0b2, #ffa726 70.71%), linear-gradient(
+      127deg, #ffa726, #ffca28 70.71%), linear-gradient(
+      336deg, #fb8c00, #ffcc80 70.71%);
 
   font-family: 'Hind Madurai', 'Roboto', sans-serif;
   letter-spacing: 0;
@@ -41,4 +39,42 @@ html {
 .logo-img {
   width: 50px;
   margin-top: 8px;
+}
+
+
+.v-application .event-details {
+  margin-top: 15px;
+
+  .card__text {
+    padding: 0;
+  }
+
+  .display-1, .subheading, .title, .body-2, .headline {
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+    text-align: center;
+    color: #bdbdbd;
+    font-weight: bold;
+  }
+
+  a {
+    text-decoration: none;
+    color: #bdbdbd;
+  }
+
+  .event-left {
+    background-color: #eee;
+    padding: 10px;
+  }
+
+  .event-right {
+    padding: 10px;
+  }
+
+  .event-divider {
+    margin: 5px 0 10px 0;
+  }
+}
+
+.event-status-divider {
+  margin: 15px 0px;
 }
