@@ -170,6 +170,10 @@ export const actions = {
     for (var i = 0; i < result.docs.length; i++) {
       let doc = result.docs[i]
       let account = await firebase.firestore().doc('accounts/'+ doc.id).get()
+      if (!account.exists) {
+        throw new Error('no account found')
+      }
+
       let data = account.data()
 
       if (data.teams && _.find(data.teams, ['id', ctx.state.account.active_team_id])) {

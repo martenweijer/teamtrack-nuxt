@@ -20,8 +20,11 @@
       </v-card>
 
       <v-card-text>
-        <v-btn color="secondary" to="/create-event">
+        <v-btn color="secondary" to="/create-event" v-if="account.active_team_id">
           Nieuw evenement aanmaken
+        </v-btn>
+        <v-btn color="secondary" to="/create-team" v-if="!account.active_team_id">
+          Nieuw team aanmaken
         </v-btn>
       </v-card-text>
 
@@ -108,6 +111,10 @@ export default {
       }
     },
     async loadEvents() {
+      if (!this.account.active_team_id) {
+        return
+      }
+
       let { docs } = await this.$fire.firestore.collection('events')
         .where('team_id', '==', this.account.active_team_id)
         .where('date', '>=', new Date())
@@ -118,28 +125,21 @@ export default {
         let data = doc.data()
         return { id, ...data }
       })
+
+      this.$store.commit('stopLoading')
     },
     async doStatus(event, status) {
-      await this.$store.dispatch('changeStatus', {
-        event_id: event.id,
-        status
-      })
+      try {
+        this.$store.commit('startLoading')
+        await this.$store.dispatch('changeStatus', {
+          event_id: event.id,
+          status
+        })
 
-      if (status === 1) {
-        _.get(event, 'available', []).push({
-          id: this.user.user_id,
-          name: this.account.name
-        })
-        event.unavailable = _.reject(_.get(event, 'unavailable', []), ['id', this.user.user_id])
-      } else if (status === 2) {
-        _.get(event, 'unavailable', []).push({
-          id: this.user.user_id,
-          name: this.account.name
-        })
-        event.available = _.reject(_.get(event, 'available', []), ['id', this.user.user_id])
+        await this.loadEvents()
+      } finally {
+        this.$store.commit('stopLoading')
       }
-
-      Vue.set(this.events, this.events.findIndex(e => e.id === event.id), event)
     },
     isAvailable(event) {
       return _.find(_.get(event, 'available'), ['id', this.user.user_id])
@@ -149,14 +149,18 @@ export default {
     }
   },
   async created() {
-    if (this.account == null) {
-      this.$store.watch(state => state.account, async (newValue, oldValue) => {
-        if (newValue != null) {
-          await this.loadEvents()
-        }
-      })
-    } else {
-      await this.loadEvents()
+    try {
+      if (this.account == null) {
+        this.$store.watch(state => state.account, async (newValue, oldValue) => {
+          if (newValue != null) {
+            await this.loadEvents()
+          }
+        })
+      } else {
+        await this.loadEvents()
+      }
+    } finally {
+      this.$store.commit('stopLoading')
     }
   }
 }
