@@ -95,7 +95,7 @@
         <img class="logo-img" src="/teamtracklogo.png" alt="Teamtrack Logo"/>
       </NuxtLink>
       <v-spacer></v-spacer>
-      <v-menu v-if="account">
+      <v-menu v-if="account && account.teams && account.teams.length > 0">
         <template v-slot:activator="{ on, attrs }">
           <v-btn text v-bind="attrs" v-on="on">
             {{ account.active_team_name }}

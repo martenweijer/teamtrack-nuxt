@@ -164,12 +164,17 @@ export default {
       return _.find(_.get(this.event, 'unavailable'), ['id', this.user.user_id])
     },
     async doStatus(status) {
-      await this.$store.dispatch('changeStatus', {
-        event_id: this.event.id,
-        status
-      })
+      try {
+        this.$store.commit('startLoading')
+        await this.$store.dispatch('changeStatus', {
+          event_id: this.event.id,
+          status
+        })
 
-      await this.loadEvent()
+        await this.loadEvent()
+      } finally {
+        this.$store.commit('stopLoading')
+      }
     },
     async loadEvent() {
       let result = await this.$fire.firestore.collection('events').doc(this.$route.params.id).get()
