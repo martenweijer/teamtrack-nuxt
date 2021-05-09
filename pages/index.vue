@@ -115,11 +115,7 @@ export default {
         return
       }
 
-      let { docs } = await this.$fire.firestore.collection('events')
-        .where('team_id', '==', this.account.active_team_id)
-        .where('date', '>=', new Date())
-        .orderBy('date', 'asc')
-        .get()
+      let { docs } = await this.$store.dispatch('loadEvents')
       this.events = docs.map(doc => {
         let { id } = doc
         let data = doc.data()
