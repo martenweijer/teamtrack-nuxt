@@ -53,6 +53,12 @@ export default {
   methods: {
     async onSubmit() {
       this.error = false
+
+      if (this.name == null || this.name.length < 2) {
+        this.error = true
+        return
+      }
+
       try {
         this.$store.commit('startLoading')
 

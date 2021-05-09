@@ -1,4 +1,7 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+
 import {getUserFromCookie, getUserFromSession} from '../helpers'
 import Cookies from 'js-cookie'
 import _ from 'lodash'
@@ -269,6 +272,14 @@ export const actions = {
         }),
       })
     }
+  },
+
+  async loadEvents(ctx) {
+    return this.$fire.firestore.collection('events')
+      .where('team_id', '==', ctx.state.account.active_team_id)
+      .where('date', '>', firebase.firestore.Timestamp.now())
+      .orderBy('date', 'asc')
+      .get()
   }
 }
 
