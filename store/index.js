@@ -93,7 +93,7 @@ export const actions = {
       .signInWithEmailAndPassword(user.email, user.pass)
       .then(async userCredential => {
         let token = await firebase.auth().currentUser.getIdToken(true)
-        Cookies.set('access_token', token)
+        Cookies.set('access_token', token, {expires: 365})
 
         await ctx.dispatch('setUser', {
           user_id: userCredential.user.uid,
