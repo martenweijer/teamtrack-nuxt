@@ -202,7 +202,7 @@ export default {
       text += ' kunnen jullie je aanwezigheid nog even opgeven voor '
       text += this.event.name
       text += ' op: '
-      text += 'https://app.teamtrack.nl/event/'+ this.event.id
+      text += 'https://app.teamtrack.nl/events/'+ this.event.id
       return text
     },
   },
